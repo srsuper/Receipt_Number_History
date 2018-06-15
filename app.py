@@ -1,7 +1,7 @@
 from flask import Flask, request, abort
 import os
 
-from Checker import Receipt_Numbers
+#from Checker import Receipt_Numbers
 from Utilities_Functions import filter_inputs, parse_results
 
 from linebot import (
