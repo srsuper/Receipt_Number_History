@@ -1,5 +1,6 @@
 from flask import Flask, request, abort
 import os
+from ast import literal_eval
 
 from Checker import Receipt_Numbers
 from Utilities_Functions import filter_inputs, parse_results
@@ -21,6 +22,9 @@ line_bot_api = LineBotApi(os.environ['Channel_Access_Token'])
 handler = WebhookHandler(os.environ['Channel_Secret'])
 
 ph = Prize_History()
+with open("record.txt", 'r') as f:
+    prize_dict = literal_eval(f.read())
+rn = Receipt_Numbers(prize_dict=prize_dict)
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -53,7 +57,6 @@ def handle_message(event):
         TextSendMessage(text=batch))
     
 def single_check(input_text):    
-    rn = Receipt_Numbers(prize_dict=ph.get_prize_dict())
     result = rn.check(input_text)
     msg = list(map(parse_results, result))
     msg = '\n'.join(msg)
