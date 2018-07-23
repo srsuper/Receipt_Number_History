@@ -10,14 +10,14 @@ prize_dict = {
 }
 
 def parse_results(results):
-    if type(results) == tuple:
-        months = results[0]
-        prize = prize_dict[results[1]]
-        return '恭喜中了!\n{} 月的 {}\n獎金 {} 元'.format(months, prize[0], prize[1])
+    if type(results) == dict:
+        months = list(results.keys())[0]
+        prize = prize_dict[list(results.values())[0]]
+        return '恭喜中了{}月的{}\n獎金 {} 元'.format(months, prize[0], prize[1])
     elif 'no hit' in results:
         return '沒中'
     else:
-        return '這不是正確的統一發票號碼(至少要有3位數字)'
+        return '號碼需為3位以上的數字'
 
 def numerical(character):
     try:
