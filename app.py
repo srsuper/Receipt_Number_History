@@ -21,7 +21,7 @@ app = Flask(__name__)
 line_bot_api = LineBotApi(os.environ['Channel_Access_Token'])
 handler = WebhookHandler(os.environ['Channel_Secret'])
 
-ph = Prize_History()
+# ph = Prize_History()
 with open("record.txt", 'r') as f:
     prize_dict = literal_eval(f.read())
 rn = Receipt_Numbers(prize_dict=prize_dict)
