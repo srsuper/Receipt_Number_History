@@ -40,23 +40,6 @@ def callback():
 
     return 'OK'
 
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    print('Received', event.message.text)
-    filtered_text = list(map(filter_inputs, event.message.text.split()))
-    batch = [single_check(t) for t in filtered_text if t] # if t isn't ''
-    batch = '\n\n'.join(batch)
-    if batch == '':
-        batch = '請輸入數字'
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=batch))
-    
-def single_check(input_text):    
-    result = rn.check(input_text)
-    msg = list(map(parse_results, result))
-    msg = '\n'.join(msg)
-    return '號碼{}:\n{}'.format(input_text[:8], msg)
     
 if __name__ == "__main__":
     app.run()
