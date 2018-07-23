@@ -21,7 +21,7 @@ line_bot_api = LineBotApi(os.environ['Channel_Access_Token'])
 handler = WebhookHandler(os.environ['Channel_Secret'])
 
 ph = Prize_History()
-rn = Receipt_Numbers(prize_dict=ph.get_prize_dict())
+#rn = Receipt_Numbers(prize_dict=ph.get_prize_dict())
 
 @app.route("/callback", methods=['POST'])
 def callback():
