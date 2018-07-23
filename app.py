@@ -46,6 +46,9 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    print('test case: print out prize dict')
+    print(ph.get_prize_dict())
+    
     print('Received', event.message.text)
     filtered_text = list(map(filter_inputs, event.message.text.split()))
     batch = [single_check(t) for t in filtered_text if t] # if t isn't ''
