@@ -1,8 +1,9 @@
 from flask import Flask, request, abort
 import os
 
-#from Checker import Receipt_Numbers
+from Checker import Receipt_Numbers
 from Utilities_Functions import filter_inputs, parse_results
+from History import Prize_History
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -18,6 +19,9 @@ app = Flask(__name__)
 
 line_bot_api = LineBotApi(os.environ['Channel_Access_Token'])
 handler = WebhookHandler(os.environ['Channel_Secret'])
+
+ph = Prize_History()
+rn = Receipt_Numbers(prize_dict=ph.get_prize_dict())
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -35,6 +39,24 @@ def callback():
         abort(400)
 
     return 'OK'
+
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    print('Received', event.message.text)
+    filtered_text = list(map(filter_inputs, event.message.text.split()))
+    batch = [single_check(t) for t in filtered_text if t] # if t isn't ''
+    batch = '\n\n'.join(batch)
+    if batch == '':
+        batch = '請輸入數字'
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=batch))
+    
+def single_check(input_text):    
+    result = rn.check(input_text)
+    msg = list(map(parse_results, result))
+    msg = '\n'.join(msg)
+    return '號碼{}:\n{}'.format(input_text[:8], msg)
     
 if __name__ == "__main__":
     app.run()
