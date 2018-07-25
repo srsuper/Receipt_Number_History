@@ -46,6 +46,11 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):  
+    if event.source.type == "room":
+        r_id = event.source.room_id # should've named room id, which is unique
+    else:
+        r_id = event.source.user_id
+        
     print('Received', event.message.text)
     filtered_text = list(map(filter_inputs, event.message.text.split()))
     sets_of_digits_count = len(filtered_text)
