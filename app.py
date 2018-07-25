@@ -48,6 +48,7 @@ def callback():
 def handle_message(event):  
     print('Received', event.message.text)
     filtered_text = list(map(filter_inputs, event.message.text.split()))
+    sets_of_digits_count = len(filtered_text)
     batch = [single_check(t) for t in filtered_text if t] # if t isn't ''
     batch = '\n\n'.join(batch)
     if batch == '':
