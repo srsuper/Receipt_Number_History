@@ -55,6 +55,13 @@ def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=batch))
+    # sends an additional notification message if won
+    # and when the batch of numbers is greater than 5 sets
+    # if 'congratulations' is in the message and sets count >= 5:
+    if '恭喜' in batch and sets_of_digits_count >= 5:
+        line_bot_api.push_message(
+        r_id,
+        TextSendMessage(text='有中獎喔~'))
     
 def single_check(input_text):    
     result = rn.check(input_text)
