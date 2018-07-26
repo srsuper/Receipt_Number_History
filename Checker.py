@@ -2,11 +2,14 @@ import requests
 from bs4 import BeautifulSoup
 
 class Receipt_Numbers(object):
-    def __init__(self):
-        self._response = requests.request("GET","http://invoice.etax.nat.gov.tw/")
-        self.soup = BeautifulSoup(str(self._response.content), 'html.parser')
-        self._prize_numbers = self._get_prize_numbers()
-        
+    def __init__(self, prize_dict=None):
+        if not prize_dict:
+            self._response = requests.request("GET", 'http://invoice.etax.nat.gov.tw/')
+            self.soup = BeautifulSoup(str(self._response.content), 'html.parser')
+            self._prize_numbers = self._get_prize_numbers()
+        else:
+            self._prize_numbers = prize_dict
+    
     @staticmethod
     def _extract_lottery_number(tag):
         lottery_numbers = [t.contents[0].split('\\xe3\\x80\\x81') for t in tag]
@@ -38,7 +41,7 @@ class Receipt_Numbers(object):
     
     @staticmethod
     def _check_top_prize_number(a_top_prize_num, num_to_check):
-        #min_len = min(len(a_top_prize_num), len(num_to_check))
+        min_len = min(len(a_top_prize_num), len(num_to_check))
         matches = 0
         for digit1, digit2 in zip(a_top_prize_num[::-1], num_to_check[::-1]):
             # [::-1] reverses string
