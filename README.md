@@ -6,4 +6,4 @@ Have you ever picked up an old receipt and thought, "Man, I wonder if these numb
 
 # QR Code
 
-![alt tag](https://qr-official.line.me/M/Fd9ibR9B2y.png)
+![alt tag](https://i.imgur.com/PA71c0v.png)
