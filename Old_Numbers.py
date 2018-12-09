@@ -47,3 +47,8 @@ class Old_Receipt_Numbers(object):
         topics = [t.text.strip().replace(" ", "") for t in topics]
         topics = [item for item in topics if item not in self.__blacklist]
         return {date_text : self.process_topics_and_numbers(topics, prize_numbers)}
+    
+    def get_prize_dict(self):
+        prize_dict = list(map(self.get_prize_numbers, self.dates_text))
+        prize_dict = [p for p in prize_dict if p]
+        return prize_dict
