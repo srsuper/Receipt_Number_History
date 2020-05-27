@@ -18,8 +18,8 @@ from linebot.models import (
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi(os.environ['Channel_Access_Token'])
-handler = WebhookHandler(os.environ['Channel_Secret'])
+line_bot_api = LineBotApi(os.environ['TkCEn1CKBZUAP1di4Cw5J+j9377Vr7pUXXS54XW5NxCJ/e1j0Ib2dPgaQqE6bonxSUXkJ81ypK7BEdKjaJbTFB4BKw/hkIA2CUaaWxESoPy7qpGFWeMTP2yTn6RbwO3HMxAmXpeWaCynOtqPc+vFHgdB04t89/1O/w1cDnyilFU='])
+handler = WebhookHandler(os.environ['93c087a75136f7802653e53738091b53'])
 
 # ph = Prize_History()
 with open("record.txt", 'r') as f:
